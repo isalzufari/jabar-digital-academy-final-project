@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getCommentsByPostId, createComment } from '../../../lib/db';
 
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '../../../lib/authOptions';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -18,10 +18,13 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const { content, postId } = await req.json();
   const session = await getServerSession(authOptions);
-  if (!session) {
+
+  if (!session?.user?.id) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
   const userId = session.user.id;
   const comment = await createComment(content, postId, userId);
-  return NextResponse.json(comment);
+
+  return NextResponse.json(comment, { status: 201 });
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getPosts, createPost } from '../../../lib/db';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '../../../lib/authOptions';
 import { getServerSession } from 'next-auth';
 
 export async function GET() {

@@ -147,7 +147,7 @@ export const getCommentsByPostId = async (postId: number) => {
 export const createComment = async (
   content: string,
   postId: number,
-  userId: number
+  userId: string
 ) => {
   const { rows } = await sql`
     INSERT INTO comments (content, post_id, user_id)
@@ -168,7 +168,7 @@ export const getLikesByPostId = async (postId: number) => {
   return rows;
 };
 
-export const addLike = async (postId: number, userId: number) => {
+export const addLike = async (postId: number, userId: string) => {
   const { rows } = await sql`
     INSERT INTO likes (post_id, user_id)
     VALUES (${postId}, ${userId})
