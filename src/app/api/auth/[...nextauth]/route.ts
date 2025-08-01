@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -32,9 +32,7 @@ const handler = NextAuth({
   pages: {
     signIn: '/login',
   },
-  session: {
-    strategy: 'jwt',
-  },
+  session: { strategy: 'jwt' },
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.user = user;
@@ -46,6 +44,7 @@ const handler = NextAuth({
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
