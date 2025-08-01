@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getUsers, createUser } from '../../../lib/db';
+import bcrypt from 'bcrypt';
 
 export async function GET() {
   const users = await getUsers();
@@ -8,6 +9,8 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const { name, email, password, role } = await req.json();
-  const newUser = await createUser(name, email, password, role);
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newUser = await createUser(name, email, hashedPassword, role);
   return NextResponse.json(newUser);
 }

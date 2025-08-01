@@ -15,13 +15,13 @@ export const getUserById = async (id: number) => {
 export const createUser = async (
   name: string,
   email: string,
-  password: string,
+  hashedPassword: string,
   role = 'reader'
 ) => {
   const { rows } = await sql`
     INSERT INTO users (name, email, password, role)
-    VALUES (${name}, ${email}, ${password}, ${role})
-    RETURNING *;
+    VALUES (${name}, ${email}, ${hashedPassword}, ${role})
+    RETURNING id;
   `;
   return rows[0];
 };
