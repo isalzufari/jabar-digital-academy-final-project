@@ -32,7 +32,7 @@ export const authOptions = {
   pages: {
     signIn: '/login',
   },
-  session: { strategy: 'jwt' },
+  session: { strategy: 'jwt' as const },
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.user = user;
