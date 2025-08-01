@@ -62,6 +62,7 @@ const postsSlice = createSlice({
     items: any[];
     currentPost: any;
     status: string;
+    loading: boolean;
   },
   reducers: {},
   extraReducers: (builder) => {

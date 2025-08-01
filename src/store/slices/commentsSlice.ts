@@ -27,6 +27,7 @@ const commentsSlice = createSlice({
   initialState: { items: [], status: 'idle' } as {
     items: any[];
     status: string;
+    loading: boolean;
   },
   reducers: {},
   extraReducers: (builder) => {
